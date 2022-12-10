@@ -35,6 +35,10 @@ parser.add_argument("--frames", type=int, default=10**7,
 # Parameters for main algorithm
 parser.add_argument("--epochs", type=int, default=4,
                     help="number of epochs for PPO (default: 4)")
+
+parser.add_argument("--visibility", type=int, default=7,
+                    help="Number of visibility (default: 7)")
+
 parser.add_argument("--batch-size", type=int, default=256,
                     help="batch size for PPO (default: 256)")
 parser.add_argument("--frames-per-proc", type=int, default=None,
@@ -98,7 +102,7 @@ if __name__ == "__main__":
 
     envs = []
     for i in range(args.procs):
-        envs.append(utils.make_env(args.env, args.seed + 10000 * i))
+        envs.append(utils.make_env(args.env, args.seed + 10000 * i, agent_view_size_param = args.visibility))
     txt_logger.info("Environments loaded\n")
 
     # Load training status

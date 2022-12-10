@@ -28,6 +28,8 @@ parser.add_argument("--memory", action="store_true", default=False,
                     help="add a LSTM to the model")
 parser.add_argument("--text", action="store_true", default=False,
                     help="add a GRU to the model")
+parser.add_argument("--visibility", type=int, default=7,
+                    help="Number of visibility (default: 7)")
 
 if __name__ == "__main__":
     args = parser.parse_args()
@@ -44,7 +46,7 @@ if __name__ == "__main__":
 
     envs = []
     for i in range(args.procs):
-        env = utils.make_env(args.env, args.seed + 10000 * i)
+        env = utils.make_env(args.env, args.seed + 10000 * i, agent_view_size_param = args.visibility)
         envs.append(env)
     env = ParallelEnv(envs)
     print("Environments loaded\n")
